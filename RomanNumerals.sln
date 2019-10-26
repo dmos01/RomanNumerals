@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumerals", "..\..\..\OneDrive\Work\Code\Visual Studio\RomanNumerals\RomanNumerals\RomanNumerals.csproj", "{06180916-76F5-4508-8C1F-F894F8EA5F2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumerals", "RomanNumerals\RomanNumerals.csproj", "{AD95A293-F2C1-46CA-91F7-5FE211C3B529}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumeralsTests", "..\..\..\OneDrive\Work\Code\Visual Studio\RomanNumerals\RomanNumeralsTests\RomanNumeralsTests.csproj", "{D3A8CE47-EDE0-4287-976A-61CAC45B52C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RomanNumeralsTests", "RomanNumeralsTests\RomanNumeralsTests.csproj", "{169CD039-3ED3-49BB-96A6-D308918A2346}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{06180916-76F5-4508-8C1F-F894F8EA5F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06180916-76F5-4508-8C1F-F894F8EA5F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06180916-76F5-4508-8C1F-F894F8EA5F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06180916-76F5-4508-8C1F-F894F8EA5F2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3A8CE47-EDE0-4287-976A-61CAC45B52C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3A8CE47-EDE0-4287-976A-61CAC45B52C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3A8CE47-EDE0-4287-976A-61CAC45B52C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3A8CE47-EDE0-4287-976A-61CAC45B52C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD95A293-F2C1-46CA-91F7-5FE211C3B529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD95A293-F2C1-46CA-91F7-5FE211C3B529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD95A293-F2C1-46CA-91F7-5FE211C3B529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD95A293-F2C1-46CA-91F7-5FE211C3B529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{169CD039-3ED3-49BB-96A6-D308918A2346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{169CD039-3ED3-49BB-96A6-D308918A2346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{169CD039-3ED3-49BB-96A6-D308918A2346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{169CD039-3ED3-49BB-96A6-D308918A2346}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
