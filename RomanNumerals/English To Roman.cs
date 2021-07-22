@@ -1,85 +1,76 @@
 ﻿using System;
-using JetBrains.Annotations;
+using System.Text;
 using static RomanNumerals.Converters;
 
 namespace RomanNumerals
 {
     /// <summary>
-    /// Static class.
+    ///     Static class.
     /// </summary>
     public static class EnglishToRoman
     {
         public const int MaxEnglishNumber = 3999;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="englishNumber">Between 1 and 3999.</param>
         /// <returns></returns>
-        [NotNull]
         public static string Convert(int englishNumber)
         {
             if (englishNumber < 1 || englishNumber > MaxEnglishNumber)
                 throw new ArgumentOutOfRangeException();
 
-            byte[] digitArray = ToDigitArrayPaddedWithOpeningZeroes(englishNumber);
-            string output = "";
+            char[] charArray = englishNumber.ToString().ToCharArray();
+            int length = charArray.Length;
+            byte[] digitArray = new byte[length];
+            for (byte i = 0; i < charArray.Length; i++)
+                digitArray[i] = byte.Parse(charArray[i].ToString());
 
-            for (byte i = 0; i < MaxEnglishNumber.ToString().Length; i++)
+            StringBuilder output = new StringBuilder();
+
+            for (byte i = 0; i < length; i++)
             {
-                int column;
-                switch (i)
-                {
-                    case 0:
-                        column = 1000;
-                        break;
-                    case 1:
-                        column = 100;
-                        break;
-                    case 2:
-                        column = 10;
-                        break;
-                    case 3:
-                        column = 1;
-                        break;
-                    default:
-                        throw new Exception();
-                }
-
-                switch (digitArray[i])
-                {
-                    case 9:
-                        output += ConvertEnglishToRoman[column].ToString();
-                        output += ConvertEnglishToRoman[column * 10].ToString();
-                        break;
-                    case 4:
-                        output += ConvertEnglishToRoman[column].ToString();
-                        output += ConvertEnglishToRoman[column * 5].ToString();
-                        break;
-                    default:
-                        {
-                            if (digitArray[i] > 4)
-                            {
-                                output += ConvertEnglishToRoman[column * 5].ToString();
-                                digitArray[i] -= 5;
-                            }
-
-                            while (digitArray[i] > 0)
-                            {
-                                output += ConvertEnglishToRoman[column];
-                                digitArray[i]--;
-                            }
-
-                            break;
-                        }
-                }
+                //Last index is 1s column and so on up. - 1 for 10^0 = 1.
+                int power = length - i - 1;
+                AddColumn((int) Math.Pow(10, power), i);
             }
 
-            return output;
+            return output.ToString();
+
+            //Column = 1, 10, 100 or 1000.
+            void AddColumn(int column, byte indexOfColumn)
+            {
+                switch (digitArray[indexOfColumn])
+                {
+                    case 9:
+                        output.Append(EnglishToRomanCharacter[column].ToString());
+                        output.Append(EnglishToRomanCharacter[column * 10].ToString());
+                        break;
+                    case 4:
+                        output.Append(EnglishToRomanCharacter[column].ToString());
+                        output.Append(EnglishToRomanCharacter[column * 5].ToString());
+                        break;
+
+                    default:
+                        if (digitArray[indexOfColumn] > 4)
+                        {
+                            output.Append(EnglishToRomanCharacter[column * 5].ToString());
+                            digitArray[indexOfColumn] -= 5;
+                        }
+
+                        while (digitArray[indexOfColumn] > 0)
+                        {
+                            output.Append(EnglishToRomanCharacter[column]);
+                            digitArray[indexOfColumn]--;
+                        }
+
+                        break;
+                }
+            }
         }
 
         /// <summary>
-        /// Outputs null if fails.
+        ///     Outputs null if fails.
         /// </summary>
         /// <param name="englishNumber">Between 1 and 3999.</param>
         /// <param name="romanString">Null if fails.</param>
@@ -96,20 +87,6 @@ namespace RomanNumerals
                 romanString = null;
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Creates a 4-character (MaxEnglishNumber.Length) byte array, padded at start by 0s if necessary.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        private static byte[] ToDigitArrayPaddedWithOpeningZeroes(int input)
-        {
-            char[] charArray = input.ToString("D" + MaxEnglishNumber.ToString().Length).ToCharArray();
-            byte[] byteArray = new byte[charArray.Length];
-            for (byte i = 0; i < charArray.Length; i++)
-                byteArray[i] = byte.Parse(charArray[i].ToString());
-            return byteArray;
         }
     }
 }

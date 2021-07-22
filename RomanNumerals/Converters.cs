@@ -4,7 +4,7 @@ namespace RomanNumerals
 {
     internal static class Converters
     {
-        public static readonly Dictionary<char, int> ConvertRomanToEnglish =
+        public static readonly Dictionary<char, int> RomanCharacterToEnglish =
             new Dictionary<char, int>
             {
                 {'I', 1},
@@ -16,7 +16,7 @@ namespace RomanNumerals
                 {'M', 1000}
             };
 
-        public static readonly Dictionary<int, char> ConvertEnglishToRoman =
+        public static readonly Dictionary<int, char> EnglishToRomanCharacter =
             new Dictionary<int, char>
             {
                 {1, 'I'},

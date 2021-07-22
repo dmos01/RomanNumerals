@@ -1,29 +1,27 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanNumerals
 {
     /// <summary>
-    /// Static class.
+    ///     Static class.
     /// </summary>
     public static class RomanToEnglish
     {
         static int output;
-        static List<char> inputList;
-        static int countOfNumeralsRepresentingColumnNumber;
+        static List<char> characterList;
+        static char characterOfColumn;
 
         /// <summary>
-        /// 
         /// </summary>
-        /// <param name="romanCharacter"></param>
+        /// <param name="romanCharacter">In uppercase.</param>
         /// <returns></returns>
         public static int Convert(char romanCharacter)
-            => Converters.ConvertRomanToEnglish[char.ToUpper(romanCharacter)];
+            => Converters.RomanCharacterToEnglish[char.ToUpper(romanCharacter)];
 
         /// <summary>
-        /// Outputs -1 if fails.
+        ///     Outputs -1 if fails.
         /// </summary>
         /// <param name="romanCharacter"></param>
         /// <param name="englishNumber">-1 if fails.</param>
@@ -32,7 +30,7 @@ namespace RomanNumerals
         {
             try
             {
-                englishNumber = Converters.ConvertRomanToEnglish[char.ToUpper(romanCharacter)];
+                englishNumber = Converters.RomanCharacterToEnglish[char.ToUpper(romanCharacter)];
                 return true;
             }
             catch
@@ -42,41 +40,113 @@ namespace RomanNumerals
             }
         }
 
+
         /// <summary>
-        /// Up to English value 3999.
+        ///     Up to English value 3999.
         /// </summary>
         /// <param name="romanString"></param>
         /// <returns></returns>
-        public static int Convert([NotNull]string romanString)
+        public static int Convert(string romanString)
         {
-            romanString = romanString.ToUpper();
+            if (romanString is null)
+                throw new ArgumentNullException();
+
+            characterList = new List<char>(romanString.Length);
+            characterList.AddRange(from x in romanString where x != ' ' select char.ToUpper(x));
+            if (characterList.Count == 0)
+                throw new ArgumentException();
+
             output = 0;
-            inputList = romanString.ToList();
 
-            Handle(1);
-            EndsWithTwoCharactersRepresentingNines(1);
-            EndsWithCharacterRepresentingFives(1);
+            HandleColumn(1);
+            HandleColumn(10);
+            HandleColumn(100);
+            characterOfColumn = Converters.EnglishToRomanCharacter[1000];
+            EndsWithNonFiveNonNineCharacter(1000);
 
-            Handle(10);
-            EndsWithTwoCharactersRepresentingNines(10);
-            EndsWithCharacterRepresentingFives(10);
-
-            Handle(100);
-            EndsWithTwoCharactersRepresentingNines(100);
-            EndsWithCharacterRepresentingFives(100);
-
-            Handle(1000);
-
+            characterList = null;
             return output;
+
+            void HandleColumn(int column)
+            {
+                characterOfColumn = Converters.EnglishToRomanCharacter[column];
+                EndsWithNonFiveNonNineCharacter(column);
+                EndsWithTwoCharactersRepresentingNines(column);
+                EndsWithCharacterRepresentingFives(column);
+            }
         }
 
         /// <summary>
-        /// Up to English value 3999. Outputs -1 if fails.
+        ///     Handle Roman Numerals representing English 10s: I, X, C, M.
+        /// </summary>
+        /// <param name="column">1, 10, 100 or 1000.</param>
+        private static void EndsWithNonFiveNonNineCharacter(int column)
+        {
+            while (characterList.Any() && characterList[characterList.Count - 1] == characterOfColumn)
+            {
+                output += column;
+                characterList.RemoveAt(characterList.Count - 1);
+            }
+        }
+
+        /// <summary>
+        ///     For example, IX.
+        /// </summary>
+        /// <param name="column">1, 10, 100 or 1000.</param>
+        private static void EndsWithTwoCharactersRepresentingNines(int column)
+        {
+            if (characterList.Count > 1 &&
+                characterList[characterList.Count - 1] == Converters.EnglishToRomanCharacter[column * 10] &&
+                characterList[characterList.Count - 2] == characterOfColumn)
+            {
+                output += column * 9;
+                characterList.RemoveAt(characterList.Count - 1);
+                characterList.RemoveAt(characterList.Count - 1);
+            }
+        }
+
+        /// <summary>
+        ///     Adds V or L to the static output. They can only appear once each and cannot subtract.
+        /// </summary>
+        /// <param name="column">1, 10, 100 or 1000.</param>
+        private static void EndsWithCharacterRepresentingFives(int column)
+        {
+            int five = column * 5;
+
+            if (!characterList.Any() ||
+                characterList[characterList.Count - 1] != Converters.EnglishToRomanCharacter[five])
+                return;
+
+            //Has found a 'five' numeral in this column but output has already reached 9 in the column. Impossible.
+            if (output >= column * 9)
+                throw new Exception();
+
+            if (characterList.Count == 1)
+            {
+                output += five;
+                return;
+            }
+
+            if (characterList[characterList.Count - 2] == characterOfColumn) //Ends with IV, for example.
+            {
+                output += column * 4;
+                characterList.RemoveAt(characterList.Count - 1);
+                characterList.RemoveAt(characterList.Count - 1);
+                return;
+            }
+
+            output += five;
+            characterList.RemoveAt(characterList.Count - 1);
+        }
+
+
+        /// <summary>
+        ///     Up to English value 3999. Outputs -1 if fails.
         /// </summary>
         /// <param name="romanString"></param>
         /// <param name="englishNumber">-1 if fails.</param>
         /// <returns></returns>
-        public static bool TryConvert([NotNull]string romanString, out int englishNumber)
+        public static bool TryConvert(string romanString, out int englishNumber)
         {
             try
             {
@@ -88,81 +158,6 @@ namespace RomanNumerals
                 englishNumber = -1;
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Handle Roman Numerals representing English 10s: I, X, C, M.
-        /// </summary>
-        /// <param name="base10Column">1, 10, 100 or 1000.</param>
-        private static void Handle(int base10Column)
-        {
-            countOfNumeralsRepresentingColumnNumber =
-                inputList.Count(x => x == Converters.ConvertEnglishToRoman[base10Column]);
-            if (countOfNumeralsRepresentingColumnNumber > 3)
-                throw new ArgumentException();
-
-            while (inputList.Any() && inputList[inputList.Count - 1] == Converters.ConvertEnglishToRoman[base10Column])
-            {
-                output += base10Column;
-                inputList.RemoveAt(inputList.Count - 1);
-                countOfNumeralsRepresentingColumnNumber--;
-            }
-        }
-
-        /// <summary>
-        /// For example, IX.
-        /// </summary>
-        /// <param name="base10Column">1, 10, 100 or 1000.</param>
-        private static void EndsWithTwoCharactersRepresentingNines(int base10Column)
-        {
-            if (inputList.Count > 1 &&
-                inputList[inputList.Count - 1] == Converters.ConvertEnglishToRoman[base10Column * 10] &&
-                inputList[inputList.Count - 2] == Converters.ConvertEnglishToRoman[base10Column])
-            {
-                output += base10Column * 9;
-                inputList.RemoveAt(inputList.Count - 1);
-                inputList.RemoveAt(inputList.Count - 1);
-                countOfNumeralsRepresentingColumnNumber--;
-            }
-        }
-
-        /// <summary>
-        /// Adds V or L to the static output. They can only appear once each and cannot subtract.
-        /// </summary>
-        /// <param name="base10Column">1, 10, 100 or 1000.</param>
-        private static void EndsWithCharacterRepresentingFives(int base10Column)
-        {
-            int five = base10Column * 5;
-
-            if (inputList.Any() && inputList[inputList.Count - 1] == Converters.ConvertEnglishToRoman[five])
-            {
-                //Has found a 'five' numeral in this Base 10 Column but output has already reached 9 in the Base 10 Column. Impossible.
-                if (output >= base10Column * 9)
-                    throw new Exception();
-
-                if (inputList.Count == 1)
-                {
-                    output += five;
-                    return;
-                }
-
-                if (inputList[inputList.Count - 2] == Converters.ConvertEnglishToRoman[base10Column]
-                ) //Ends with IV, for example.
-                {
-                    output += base10Column * 4;
-                    inputList.RemoveAt(inputList.Count - 1);
-                    inputList.RemoveAt(inputList.Count - 1);
-                    countOfNumeralsRepresentingColumnNumber--;
-                    return;
-                }
-
-                output += five;
-                inputList.RemoveAt(inputList.Count - 1);
-            }
-
-            //The current Base 10 Column has not been properly dealt with.
-            if (countOfNumeralsRepresentingColumnNumber > 0 || inputList.Contains(Converters.ConvertEnglishToRoman[five]))
-                throw new Exception();
         }
     }
 }

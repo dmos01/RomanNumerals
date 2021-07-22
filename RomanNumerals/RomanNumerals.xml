@@ -6,51 +6,42 @@
     <members>
         <member name="P:RomanNumerals.AboutInfo.AssemblyVersion">
             <summary>
-            Not to be confused with Package Version or Assembly File Version.
+                Not to be confused with Package Version or Assembly File Version.
             </summary>
         </member>
         <member name="T:RomanNumerals.EnglishToRoman">
             <summary>
-            Static class.
+                Static class.
             </summary>
         </member>
         <member name="M:RomanNumerals.EnglishToRoman.Convert(System.Int32)">
             <summary>
-            
             </summary>
             <param name="englishNumber">Between 1 and 3999.</param>
             <returns></returns>
         </member>
         <member name="M:RomanNumerals.EnglishToRoman.TryConvert(System.Int32,System.String@)">
             <summary>
-            Outputs null if fails.
+                Outputs null if fails.
             </summary>
             <param name="englishNumber">Between 1 and 3999.</param>
             <param name="romanString">Null if fails.</param>
             <returns></returns>
         </member>
-        <member name="M:RomanNumerals.EnglishToRoman.ToDigitArrayPaddedWithOpeningZeroes(System.Int32)">
-            <summary>
-            Creates a 4-character (MaxEnglishNumber.Length) byte array, padded at start by 0s if necessary.
-            </summary>
-            <param name="input"></param>
-            <returns></returns>
-        </member>
         <member name="T:RomanNumerals.RomanToEnglish">
             <summary>
-            Static class.
+                Static class.
             </summary>
         </member>
         <member name="M:RomanNumerals.RomanToEnglish.Convert(System.Char)">
             <summary>
-            
             </summary>
-            <param name="romanCharacter"></param>
+            <param name="romanCharacter">In uppercase.</param>
             <returns></returns>
         </member>
         <member name="M:RomanNumerals.RomanToEnglish.TryConvert(System.Char,System.Int32@)">
             <summary>
-            Outputs -1 if fails.
+                Outputs -1 if fails.
             </summary>
             <param name="romanCharacter"></param>
             <param name="englishNumber">-1 if fails.</param>
@@ -58,36 +49,36 @@
         </member>
         <member name="M:RomanNumerals.RomanToEnglish.Convert(System.String)">
             <summary>
-            Up to English value 3999.
+                Up to English value 3999.
             </summary>
             <param name="romanString"></param>
             <returns></returns>
         </member>
+        <member name="M:RomanNumerals.RomanToEnglish.EndsWithNonFiveNonNineCharacter(System.Int32)">
+            <summary>
+                Handle Roman Numerals representing English 10s: I, X, C, M.
+            </summary>
+            <param name="column">1, 10, 100 or 1000.</param>
+        </member>
+        <member name="M:RomanNumerals.RomanToEnglish.EndsWithTwoCharactersRepresentingNines(System.Int32)">
+            <summary>
+                For example, IX.
+            </summary>
+            <param name="column">1, 10, 100 or 1000.</param>
+        </member>
+        <member name="M:RomanNumerals.RomanToEnglish.EndsWithCharacterRepresentingFives(System.Int32)">
+            <summary>
+                Adds V or L to the static output. They can only appear once each and cannot subtract.
+            </summary>
+            <param name="column">1, 10, 100 or 1000.</param>
+        </member>
         <member name="M:RomanNumerals.RomanToEnglish.TryConvert(System.String,System.Int32@)">
             <summary>
-            Up to English value 3999. Outputs -1 if fails.
+                Up to English value 3999. Outputs -1 if fails.
             </summary>
             <param name="romanString"></param>
             <param name="englishNumber">-1 if fails.</param>
             <returns></returns>
-        </member>
-        <member name="M:RomanNumerals.RomanToEnglish.Handle(System.Int32)">
-            <summary>
-            Handle Roman Numerals representing English 10s: I, X, C, M.
-            </summary>
-            <param name="base10Column">1, 10, 100 or 1000.</param>
-        </member>
-        <member name="M:RomanNumerals.RomanToEnglish.EndsWithTwoCharactersRepresentingNines(System.Int32)">
-            <summary>
-            For example, IX.
-            </summary>
-            <param name="base10Column">1, 10, 100 or 1000.</param>
-        </member>
-        <member name="M:RomanNumerals.RomanToEnglish.EndsWithCharacterRepresentingFives(System.Int32)">
-            <summary>
-            Adds V or L to the static output. They can only appear once each and cannot subtract.
-            </summary>
-            <param name="base10Column">1, 10, 100 or 1000.</param>
         </member>
     </members>
 </doc>

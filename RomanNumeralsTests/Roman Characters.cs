@@ -2,7 +2,8 @@
 using RomanNumerals;
 
 namespace RomanNumeralsTests
-{[TestFixture]
+{
+    [TestFixture]
     class RomanCharacters
     {
         [Test]

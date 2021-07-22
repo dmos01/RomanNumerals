@@ -18,6 +18,7 @@ namespace RomanNumeralsTests
             {
                 Assert.Fail(ex.Message);
             }
+
             Assert.Pass();
         }
 
@@ -32,6 +33,7 @@ namespace RomanNumeralsTests
             {
                 Assert.Fail(ex.Message);
             }
+
             Assert.Pass();
         }
     }

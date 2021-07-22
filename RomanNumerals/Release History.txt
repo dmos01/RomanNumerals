@@ -1,0 +1,35 @@
+Release History:
+
+Version 2.1, 22 July 2021:
+*Rearranged methods.
+*Removed [NotNull].
+*RomanNumeralsTests is built on .NET 5.0.
+
+English to Roman:
+*Internally, output is now a StringBuilder.
+*Uses powers to avoid creating a four-digit, zero-padded array.
+
+Roman to English:
+*CharacterList set to null before return.
+*Checks for null and empty string.
+*No longer checks for > 3 of the same character.
+*Removes spaces while performing ToUpper().
+
+
+Version 2.0.1 - 11 September 2019:
+*Class summaries call out the classes as static.
+*Clearer variable names.
+*Corrected capitalisation of proper nouns in method summaries.
+*More detail in method summaries.
+*Some integers replaced with bytes in EnglishToRoman.
+
+
+Version 2.0 - 7 September 2019:
+*Seperated into partial files in a .NET Standard 2.0 project.
+*Clearer method and variable names.
+*Method summaries.
+*Run() methods replaced with Convert() and TryConvert().
+*Unit tests.
+
+Version 1.0 - 2013:
+*Released.

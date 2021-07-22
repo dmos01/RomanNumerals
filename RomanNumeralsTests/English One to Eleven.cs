@@ -36,6 +36,5 @@ namespace RomanNumeralsTests
 
         [Test]
         public void Eleven() => Test.EnglishToRomanTest(11, "XI");
-
     }
 }

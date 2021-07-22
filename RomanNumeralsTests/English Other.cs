@@ -31,7 +31,5 @@ namespace RomanNumeralsTests
 
         [Test]
         public void _1000() => Test.EnglishToRomanTest(1000, "M");
-
-
     }
 }
